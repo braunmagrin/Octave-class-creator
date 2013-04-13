@@ -9,6 +9,11 @@ if len(sys.argv) < 2:
 class_name = sys.argv[1]
 attributes_list = sys.argv[2:]
 
+# TODO list:
+# -  Be aware of constructor parameters;
+# -  Receive the constructor with all the typed 'specified', parse it and 
+#    create subsref.m and subsasgn.m files with type checks
+
 # create directory
 dir_name = '@' + class_name
 if not os.path.exists(dir_name):
