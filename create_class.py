@@ -42,9 +42,9 @@ function ret = subsref(obj, sub)\n\
 if isempty(sub)\n\
 	error('@{0}/subsref: missing index');\n\
 end\n\n\
-switch sub.type\n\
+switch sub(1).type\n\
 case '.'\n\
-	attribute = sub.subs;\n\
+	attribute = sub(1).subs;\n\
 	switch attribute\n"
 
 case_clause = "\
@@ -55,8 +55,12 @@ end = "\
 	otherwise\n\
 		error(\"@{0}/subsref: invalid property '%s'\", attribute);\n\
 	end\n\
+	sub(1) = [];\n\
+	if length(sub)\n\
+		ret = subsref(ret,sub);\n\
+	end\n\
 otherwise\n\
-	error(\"@{0}/subsref: invalid property '%s'\", attribute);\n\
+	error('@{0}/subsref: invalid subscript reference operator');\n\
 end\n\n\
 end"
 
@@ -73,9 +77,9 @@ if isempty(sub)\n\
 	error('@{0}/subsasgn: missing index');\n\
 end\n\n\
 ret = obj;\n\n\
-switch sub.type\n\
+switch sub(1).type\n\
 case '.'\n\
-	attribute = sub.subs;\n\
+	attribute = sub(1).subs;\n\
 	switch attribute\n"
 
 case_clause = "\
@@ -86,8 +90,12 @@ end = "\
 	otherwise\n\
 		error(\"@{0}/subsasgn: invalid property '%s'\", attribute);\n\
 	end\n\
+	sub(1) = [];\n\
+	if length(sub)\n\
+		ret = subsasgn(ret,sub,rhs);\n\
+	end\n\
 otherwise\n\
-	error(\"@{0}/subsasgn: invalid property '%s'\", attribute);\n\
+	error(\"@{0}/subsasgn: invalid subscript assignment operator\");\n\
 end\n\n\
 end"
 
